@@ -1,23 +1,20 @@
-import { useEffect, useState } from 'react'
-import { getAreaData } from './api'
+import { useEffect, useState } from "react";
+import { getAreaData } from "./api";
 
-import './App.css'
+import "./App.css";
 
 function App() {
-
   const [areas, setAreas] = useState([]);
 
   const load = async () => {
     try {
-      const areaData = await getAreaData()
+      const areaData = await getAreaData();
 
-      areas.concat(areaData);
-  
-      setAreas(areas);
+      setAreas(areaData);
     } catch (error) {
-      window.alert("todo: fix app")
+      window.alert("todo: fix app");
     }
-  }
+  };
 
   useEffect(() => {
     load();
@@ -28,7 +25,7 @@ function App() {
       <h1>Postcoders</h1>
       <h2>{`Areas for BB10: ${areas.length}`}</h2>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
