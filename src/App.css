@@ -10,3 +10,11 @@
   width: 90vw;
   border: solid grey 2px;
 }
+
+.card-container {
+  padding: 2vh 2vw;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  flex-wrap: wrap;
+}
