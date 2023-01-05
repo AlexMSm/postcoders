@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getAreaData } from "./api";
 
 import "./App.css";
+import BasicCard from "./Components/BasicCard";
 
 function App() {
   const [areas, setAreas] = useState([]);
@@ -22,6 +23,7 @@ function App() {
     try {
       const areaData = await getAreaData(outcode);
       setAreas(areaData);
+      console.log(areaData[0]["place name"]);
     } catch (error) {
       window.alert(error);
       setAreas([]);
@@ -45,8 +47,21 @@ function App() {
         />
         <button className="postcode-submit-btn">Submit</button>
       </form>
-
       <h2>{`Areas for ${outcode}: ${areas.length}`}</h2>
+      <div className="card-container">
+        {areas.map((area) => {
+          return (
+            <BasicCard
+              key={`${outcode}-${area["place name"]}`}
+              name={area["place name"]}
+              longitude={area.longitude}
+              latitude={area.latitude}
+              country={area.state}
+              countryCode={area["state abbreviation"]}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
