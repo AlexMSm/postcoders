@@ -23,7 +23,6 @@ function App() {
     try {
       const areaData = await getAreaData(outcode);
       setAreas(areaData);
-      console.log(areaData[0]["place name"]);
     } catch (error) {
       window.alert(error);
       setAreas([]);
