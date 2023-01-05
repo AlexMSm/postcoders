@@ -6,23 +6,37 @@ import BasicCard from "./Components/BasicCard";
 
 function App() {
   const [areas, setAreas] = useState([]);
-  const [outcode, setOutcode] = useState("bb12");
+  const [outcode, setOutcode] = useState("BB12");
   const [text, setText] = useState("");
+  const [cache, setCache] = useState({});
 
   const onSubmit = (event) => {
+    const textUpper = text.toUpperCase();
     event.preventDefault();
     const outcodeRegex = /^[a-zA-Z]{1,2}[0-9][a-zA-Z0-9]?$/;
-    if (text.match(outcodeRegex)) {
-      setOutcode(text);
+
+    if (Object.keys(cache).includes(textUpper)) {
+      // Cache check
+      setAreas(cache[textUpper]);
+      setOutcode(textUpper);
+    } else if (text.match(outcodeRegex)) {
+      setOutcode(textUpper);
     } else {
-      alert("Incorrect outcode");
+      alert("Incorrect outcode format");
     }
   };
 
   const load = async () => {
     try {
       const areaData = await getAreaData(outcode);
-      setAreas(areaData);
+
+      setAreas(() => {
+        // Caching
+        const newCache = { ...cache };
+        newCache[outcode] = areaData;
+        setCache(newCache);
+        return areaData;
+      });
     } catch (error) {
       window.alert(error);
       setAreas([]);
